@@ -1,4 +1,3 @@
-import ClientLayout from "@/components/common/ClientLayout";
 import ReduxProvider from "@/providers/ReduxProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
@@ -27,9 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable}`}>
         <ReduxProvider>
-          <ThemeProvider>
-            <ClientLayout>{children}</ClientLayout>
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -25,3 +25,13 @@ export enum PROJECT_STATUS {
   ARCHIVED = "ARCHIVED",
   DELETED = "DELETED",
 }
+
+export interface Project {
+  _id: string;
+  name: string;
+  description: string;
+  status: PROJECT_STATUS;
+  createdBy: string;
+  isDeleted: boolean;
+  user: User;
+}

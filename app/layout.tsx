@@ -4,6 +4,7 @@ import ReduxProvider from "@/providers/ReduxProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,6 +32,7 @@ export default function RootLayout({
           <NextAuthProvider>
             <ThemeProvider>
               <AuthGuard>{children}</AuthGuard>
+              <ToastContainer />
             </ThemeProvider>
           </NextAuthProvider>
         </ReduxProvider>

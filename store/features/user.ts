@@ -1,4 +1,5 @@
 import { config } from "@/config/config";
+import { redirect } from "next/navigation";
 import { api } from "../baseQuery";
 import { removeToken, setUser } from "../slices/user";
 
@@ -11,9 +12,10 @@ const userSlice = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(setUser(data.data));
-        } catch (error) {
+        } catch (error: any) {
           dispatch(removeToken());
-          console.log("error from get user: ", error);
+          console.log(error);
+          redirect("/auth/signin");
         }
       },
     }),

@@ -8,7 +8,14 @@ const authSlice = api.injectEndpoints({
         method: "POST",
       }),
     }),
+    sendInvitation: builder.mutation({
+      query: (data) => ({
+        url: "/auth/send-invitation",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLogOutMutation } = authSlice;
+export const { useLogOutMutation, useSendInvitationMutation } = authSlice;

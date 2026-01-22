@@ -10,7 +10,7 @@ export default function LoadingIndicator(props: LoadingIndicatorProps) {
 
   const container = clsx(
     "relative flex items-center justify-center overflow-hidden",
-    { "min-h-screen bg-background": fullScreen },
+    { "min-h-[calc(100vh-200px)] bg-background": fullScreen },
     className,
   );
 
@@ -20,7 +20,7 @@ export default function LoadingIndicator(props: LoadingIndicatorProps) {
         {[0, 1, 2].map((index) => (
           <div
             key={index}
-            className="size-3 bg-primary-lighter rounded-full animate-bounce"
+            className="size-3 bg-primary-dark rounded-full animate-bounce"
             style={{
               animationDelay: `${index * 0.2}s`,
               animationDuration: "1s",

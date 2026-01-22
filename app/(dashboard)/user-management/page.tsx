@@ -21,7 +21,7 @@ const UserManagement = () => {
     try {
       setLoadingStatus(user._id);
       const updateStatus = user.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
-      await updateUserStatus({ id: user._id, status: updateStatus });
+      await updateUserStatus({ id: user._id, status: updateStatus }).unwrap();
       toast.success("User status updated successfully");
     } catch (error: any) {
       toast.error(error.message);

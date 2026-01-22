@@ -1,5 +1,7 @@
 import { config } from "@/config/config";
 import type { RootState } from "@/store/store";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError as Error } from "@reduxjs/toolkit/query";
 import {
   BaseQueryFn,
   createApi,
@@ -39,3 +41,19 @@ export const api = createApi({
   tagTypes: ["user", "all-user"],
   endpoints: () => ({}),
 });
+
+export type ErrorData = {
+  message: string;
+};
+export function isFetchBaseQueryError(
+  error: Error | SerializedError | undefined,
+): error is FetchBaseQueryError & { data: ErrorData } {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "data" in error &&
+    typeof (error as any).data === "object" &&
+    (error as any).data !== null &&
+    "message" in (error as any).data
+  );
+}

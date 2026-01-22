@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Button from "../libs/Button";
 
-enum USER_ROLE {
+export enum USER_ROLE {
   ADMIN = "ADMIN",
   MANAGER = "MANAGER",
   STAFF = "STAFF",
@@ -19,6 +19,12 @@ type Props = {
 
 type FormPayload = { role: USER_ROLE };
 
+export const userRoleOptions = [
+  { label: "Admin", value: USER_ROLE.ADMIN },
+  { label: "Manager", value: USER_ROLE.MANAGER },
+  { label: "Staff", value: USER_ROLE.STAFF },
+];
+
 const UpdateUserRoleModal = ({ open, setOpen, userId }: Props) => {
   const [updateUserRole, { isLoading }] = useUpdateUserRoleMutation();
   const {
@@ -27,15 +33,9 @@ const UpdateUserRoleModal = ({ open, setOpen, userId }: Props) => {
     formState: { errors },
   } = useForm<FormPayload>();
 
-  const options = [
-    { label: "Admin", value: USER_ROLE.ADMIN },
-    { label: "Manager", value: USER_ROLE.MANAGER },
-    { label: "Staff", value: USER_ROLE.STAFF },
-  ];
-
   async function onSubmit(data: FormPayload) {
     try {
-      await updateUserRole({ id: userId, role: data.role });
+      await updateUserRole({ id: userId, role: data.role }).unwrap();
       toast.success("User role updated successfully");
       setOpen(false);
     } catch (error: any) {
@@ -55,7 +55,7 @@ const UpdateUserRoleModal = ({ open, setOpen, userId }: Props) => {
         control={control}
         render={({ field }) => (
           <DropdownMenus
-            options={options}
+            options={userRoleOptions}
             selected={field.value}
             setSelected={field.onChange}
             error={!!errors.role}

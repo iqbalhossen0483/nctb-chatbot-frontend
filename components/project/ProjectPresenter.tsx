@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks/redux";
 import { Project } from "@/types/common";
 import Link from "next/link";
 import React from "react";
@@ -28,6 +29,8 @@ const ProjectPresenter = ({
   onDeleteProject,
   loadingDelete,
 }: Props) => {
+  const { user } = useAppSelector((state) => state.user);
+
   return (
     <div className="space-y-5">
       <Typography variant="h3">Project management</Typography>
@@ -50,7 +53,7 @@ const ProjectPresenter = ({
                 <td>description</td>
                 <td>status</td>
                 <td>createdBy</td>
-                <td>Action</td>
+                {user?.role === "ADMIN" && <td>Action</td>}
               </tr>
             </TableHead>
             <tbody>

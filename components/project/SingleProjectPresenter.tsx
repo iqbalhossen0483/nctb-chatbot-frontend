@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks/redux";
 import { Project } from "@/types/common";
 import Link from "next/link";
 import React from "react";
@@ -16,26 +17,29 @@ const SingleProjectPresenter = ({
   onDeleteProject,
   loadingDelete,
 }: Props) => {
+  const { user } = useAppSelector((state) => state.user);
   return (
     <tr>
       <td>{project.name}</td>
       <td>{project.description}</td>
       <td>{project.status}</td>
       <td>{project.user.name}</td>
-      <td className="flex justify-center gap-1">
-        <Link href={`/project-management/update-project/${project._id}`}>
-          <Button>
-            <FaRegEdit />
+      {user?.role === "ADMIN" && (
+        <td className="flex justify-center gap-1">
+          <Link href={`/project-management/update-project/${project._id}`}>
+            <Button>
+              <FaRegEdit />
+            </Button>
+          </Link>
+          <Button
+            variant="error"
+            onClick={() => onDeleteProject(project._id)}
+            loading={loadingDelete === project._id}
+          >
+            <MdDelete />
           </Button>
-        </Link>
-        <Button
-          variant="error"
-          onClick={() => onDeleteProject(project._id)}
-          loading={loadingDelete === project._id}
-        >
-          <MdDelete />
-        </Button>
-      </td>
+        </td>
+      )}
     </tr>
   );
 };

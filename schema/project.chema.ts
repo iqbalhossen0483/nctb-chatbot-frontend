@@ -5,8 +5,7 @@ export const projectSchema = yup.object().shape({
   description: yup.string().required("Description is required"),
   status: yup
     .string()
-    .oneOf(["ACTIVE", "INACTIVE"], "Invalid status")
+    .oneOf(["ACTIVE", "ARCHIVED", "DELETED"], "Invalid status")
     .default("ACTIVE"),
-  createdBy: yup.string().required("Created by is required"),
 });
 export type IProjectSchema = yup.InferType<typeof projectSchema>;

@@ -9,6 +9,11 @@ const projectSlice = api.injectEndpoints({
       providesTags: ["projects"],
     }),
 
+    getSingleProject: builder.query({
+      query: (id) => `/project/get-single/${id}`,
+      providesTags: ["project"],
+    }),
+
     createProject: builder.mutation({
       query: (data) => ({
         url: "/project/create",
@@ -21,10 +26,10 @@ const projectSlice = api.injectEndpoints({
     updateProject: builder.mutation({
       query: ({ id, data }) => ({
         url: `/project/update/${id}`,
-        method: "PATCH",
+        method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["projects"],
+      invalidatesTags: ["projects", "project"],
     }),
 
     softDeleteProject: builder.mutation({
@@ -42,4 +47,5 @@ export const {
   useCreateProjectMutation,
   useUpdateProjectMutation,
   useSoftDeleteProjectMutation,
+  useGetSingleProjectQuery,
 } = projectSlice;

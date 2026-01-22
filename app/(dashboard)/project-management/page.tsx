@@ -2,6 +2,7 @@
 
 import LoadingIndicator from "@/components/libs/LoadingIndicator";
 import ProjectPresenter from "@/components/project/ProjectPresenter";
+import { useAppSelector } from "@/hooks/redux";
 import {
   useGetAllProjectsQuery,
   useSoftDeleteProjectMutation,
@@ -12,7 +13,11 @@ import { toast } from "react-toastify";
 
 const Projects = () => {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useGetAllProjectsQuery({ page });
+  const { token } = useAppSelector((state) => state.user);
+  const { data, isLoading } = useGetAllProjectsQuery(
+    { page },
+    { skip: !token },
+  );
   const [deleteProject] = useSoftDeleteProjectMutation();
   const [loadingDelete, setLoadingDelete] = useState("");
 

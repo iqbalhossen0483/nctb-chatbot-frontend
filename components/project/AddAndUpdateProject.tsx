@@ -1,7 +1,11 @@
 "use client";
 import { useAppSelector } from "@/hooks/redux";
 import { IProjectSchema, projectSchema } from "@/schema/project.chema";
-import { useCreateProjectMutation } from "@/store/features/project";
+import {
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} from "@/store/features/project";
+import { Project } from "@/types/common";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -12,9 +16,10 @@ import Card from "../libs/Card";
 import OutlinedInput from "../libs/OutlinedInput";
 import OutlinedTextArea from "../libs/OutlinedTextArea";
 
-const AddAndUpdateProject = () => {
+const AddAndUpdateProject = ({ data }: { data?: Project }) => {
   const { user } = useAppSelector((state) => state.user);
   const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
+  const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
   const router = useRouter();
   const {
     register,
@@ -23,16 +28,19 @@ const AddAndUpdateProject = () => {
   } = useForm<IProjectSchema>({
     resolver: yupResolver(projectSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      status: "ACTIVE",
-      createdBy: user?._id,
+      name: data?.name || "",
+      description: data?.description || "",
+      status: data?.status || "ACTIVE",
     },
   });
 
-  async function onSubmit(data: IProjectSchema) {
+  async function onSubmit(payload: IProjectSchema) {
     try {
-      await createProject(data).unwrap();
+      if (data) {
+        await updateProject({ id: data._id, data: payload }).unwrap();
+      } else {
+        await createProject({ ...payload, createdBy: user?._id }).unwrap();
+      }
       toast.success("Project created successfully");
       router.push("/project-management");
     } catch (error: any) {
@@ -56,7 +64,7 @@ const AddAndUpdateProject = () => {
           error={errors.description?.message}
         />
 
-        <Button loading={isCreating} type="submit">
+        <Button loading={isCreating || isUpdating} type="submit">
           Submit
         </Button>
       </form>

@@ -51,7 +51,7 @@ const SignupForm = () => {
         router.push("/");
       }
     } catch (error: any) {
-      setError(error.data.message);
+      setError(error.data?.message);
     }
   };
 

@@ -39,7 +39,7 @@ const UpdateUserRoleModal = ({ open, setOpen, userId }: Props) => {
       toast.success("User role updated successfully");
       setOpen(false);
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.data?.message);
     }
   }
 

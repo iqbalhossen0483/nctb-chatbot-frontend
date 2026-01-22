@@ -44,7 +44,7 @@ const SignInForm = () => {
         router.push("/");
       }
     } catch (error: any) {
-      setError(error.message);
+      setError(error.data?.message);
     } finally {
       setLoading(false);
     }

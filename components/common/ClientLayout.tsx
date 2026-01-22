@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "./Footer";
 import Header from "./Header";
 import SideBar from "./sideBar";
 
@@ -10,7 +9,6 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="relative flex flex-col w-full">
         <Header />
         <div className="grow container mx-auto p-3 md:p-5">{children}</div>
-        <Footer />
       </div>
     </div>
   );

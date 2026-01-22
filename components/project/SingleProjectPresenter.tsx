@@ -5,7 +5,17 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Button from "../libs/Button";
 
-const SingleProjectPresenter = ({ project }: { project: Project }) => {
+type Props = {
+  onDeleteProject: (id: string) => void;
+  loadingDelete: string;
+  project: Project;
+};
+
+const SingleProjectPresenter = ({
+  project,
+  onDeleteProject,
+  loadingDelete,
+}: Props) => {
   return (
     <tr>
       <td>{project.name}</td>
@@ -18,7 +28,11 @@ const SingleProjectPresenter = ({ project }: { project: Project }) => {
             <FaRegEdit />
           </Button>
         </Link>
-        <Button variant="error">
+        <Button
+          variant="error"
+          onClick={() => onDeleteProject(project._id)}
+          loading={loadingDelete === project._id}
+        >
           <MdDelete />
         </Button>
       </td>

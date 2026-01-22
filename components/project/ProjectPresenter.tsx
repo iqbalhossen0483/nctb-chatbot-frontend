@@ -16,9 +16,18 @@ type Props = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   totalPage: number;
+  onDeleteProject: (id: string) => void;
+  loadingDelete: string;
 };
 
-const ProjectPresenter = ({ projects, page, setPage, totalPage }: Props) => {
+const ProjectPresenter = ({
+  projects,
+  page,
+  setPage,
+  totalPage,
+  onDeleteProject,
+  loadingDelete,
+}: Props) => {
   return (
     <div className="space-y-5">
       <Typography variant="h3">Project management</Typography>
@@ -47,7 +56,12 @@ const ProjectPresenter = ({ projects, page, setPage, totalPage }: Props) => {
             <tbody>
               {projects.length > 0 ? (
                 projects.map((project) => (
-                  <SingleProjectPresenter key={project._id} project={project} />
+                  <SingleProjectPresenter
+                    key={project._id}
+                    project={project}
+                    onDeleteProject={onDeleteProject}
+                    loadingDelete={loadingDelete}
+                  />
                 ))
               ) : (
                 <tr>

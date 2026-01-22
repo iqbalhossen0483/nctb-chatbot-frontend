@@ -15,32 +15,42 @@ import { ImHome } from "react-icons/im";
 import { IoIosLogOut, IoMdMenu } from "react-icons/io";
 import { toast } from "react-toastify";
 import Button from "../libs/Button";
+import { USER_ROLE } from "../user/UpdateUserRoleModal";
 import NavLink from "./NavLink";
 
 export type Menu = {
   name: string;
   path: string;
   icon: React.ReactNode;
+  access: USER_ROLE[];
 };
 
 const SideBar = () => {
   const { showSidebar } = useAppSelector((state) => state.settings);
+  const { user } = useAppSelector((state) => state.user);
   const [logout, { isLoading }] = useLogOutMutation();
   const dispatch = useAppDispatch();
   const route = usePathname();
   const isMd = useResponsive("down", "md");
 
   const menus: Menu[] = [
-    { name: "Dashboard", path: "/", icon: <ImHome className="text-xl" /> },
+    {
+      name: "Dashboard",
+      path: "/",
+      icon: <ImHome className="text-xl" />,
+      access: [USER_ROLE.ADMIN, USER_ROLE.MANAGER, USER_ROLE.STAFF],
+    },
     {
       name: "User management",
       path: "/user-management",
       icon: <FaUsers className="text-xl" />,
+      access: [USER_ROLE.ADMIN],
     },
     {
       name: "Project management",
       path: "/project-management",
       icon: <FaRProject className="text-xl" />,
+      access: [USER_ROLE.ADMIN, USER_ROLE.MANAGER, USER_ROLE.STAFF],
     },
   ];
 
@@ -104,14 +114,18 @@ const SideBar = () => {
 
       {/* Menu */}
       <div className={clsx("flex flex-col gap-1")}>
-        {menus.map((menu, index) => (
-          <NavLink
-            key={index}
-            menu={menu}
-            route={route}
-            collapsed={!showSidebar}
-          />
-        ))}
+        {menus.map((menu, index) => {
+          if (user && menu.access.includes(user.role)) {
+            return (
+              <NavLink
+                key={index}
+                menu={menu}
+                route={route}
+                collapsed={!showSidebar}
+              />
+            );
+          } else return null;
+        })}
       </div>
 
       <div className="absolute bottom-5 right-5 left-5">

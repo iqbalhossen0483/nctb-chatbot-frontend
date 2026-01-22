@@ -1,7 +1,7 @@
 import { config } from "@/config/config";
 import { redirect } from "next/navigation";
 import { api } from "../baseQuery";
-import { removeToken, setUser } from "../slices/user";
+import { removeToken, setLoading, setUser } from "../slices/user";
 
 const userSlice = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,12 +10,15 @@ const userSlice = api.injectEndpoints({
       providesTags: ["user"],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
+          dispatch(setLoading(true));
           const { data } = await queryFulfilled;
           dispatch(setUser(data.data));
         } catch (error: any) {
           dispatch(removeToken());
           console.log(error);
           redirect("/auth/signin");
+        } finally {
+          dispatch(setLoading(false));
         }
       },
     }),

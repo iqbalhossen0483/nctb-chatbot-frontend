@@ -43,7 +43,11 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   const renderPageButton = (page) => {
     if (page === "...") {
-      return <span className="px-2 text-border text-3xl mt-auto">••••</span>;
+      return (
+        <span className="px-2 text-3xl mt-auto text-primary-dark dark:text-gray-500 ">
+          ••••
+        </span>
+      );
     }
 
     const isActive = page === currentPage;
@@ -75,6 +79,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
       <div className="flex gap-2">
         <IconButton
+          className="rounded-md"
           size={isMobile ? "sm" : "md"}
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -83,6 +88,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </IconButton>
 
         <IconButton
+          className="rounded-md"
           size={isMobile ? "sm" : "md"}
           onClick={() =>
             currentPage < totalPages && onPageChange(currentPage + 1)

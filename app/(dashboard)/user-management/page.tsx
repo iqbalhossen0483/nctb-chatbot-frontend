@@ -1,4 +1,5 @@
 "use client";
+import LoadingIndicator from "@/components/libs/LoadingIndicator";
 import UserPresenter from "@/components/user/UserPresenter";
 import { useAppSelector } from "@/hooks/redux";
 import {
@@ -12,7 +13,7 @@ import { toast } from "react-toastify";
 const UserManagement = () => {
   const [page, setPage] = useState(1);
   const { token } = useAppSelector((state) => state.user);
-  const { data } = useGetAllUsersQuery({ page }, { skip: !token });
+  const { data, isLoading } = useGetAllUsersQuery({ page }, { skip: !token });
   const [updateUserStatus] = useUpdateUserStatusMutation();
   const [loadingStatus, setLoadingStatus] = useState("");
 
@@ -30,6 +31,11 @@ const UserManagement = () => {
   }
 
   const users: User[] = data?.data || [];
+  const totalPage = data?.meta?.last_page ?? 1;
+
+  if (isLoading) {
+    return <LoadingIndicator fullScreen />;
+  }
 
   return (
     <UserPresenter
@@ -38,6 +44,7 @@ const UserManagement = () => {
       setPage={setPage}
       onChangeStatus={handleUserStatus}
       loadingStatus={loadingStatus}
+      totalPage={totalPage}
     />
   );
 };

@@ -1,3 +1,4 @@
+import Pagination from "@/components/libs/Pagination";
 import { User } from "@/types/common";
 import Link from "next/link";
 import React from "react";
@@ -16,6 +17,7 @@ type Props = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   onChangeStatus: (user: User) => void;
   loadingStatus: string;
+  totalPage: number;
 };
 
 const UserPresenter = ({
@@ -24,6 +26,7 @@ const UserPresenter = ({
   setPage,
   onChangeStatus,
   loadingStatus,
+  totalPage,
 }: Props) => {
   return (
     <div className="space-y-5">
@@ -51,18 +54,29 @@ const UserPresenter = ({
               </tr>
             </TableHead>
             <tbody>
-              {users.map((user) => (
-                <SingleUserPresenter
-                  key={user._id}
-                  user={user}
-                  onChangeStatus={onChangeStatus}
-                  loadingStatus={loadingStatus}
-                />
-              ))}
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <SingleUserPresenter
+                    key={user._id}
+                    user={user}
+                    onChangeStatus={onChangeStatus}
+                    loadingStatus={loadingStatus}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5}>No user found</td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </TableContainer>
       </Card>
+      <Pagination
+        currentPage={page}
+        onPageChange={setPage}
+        totalPages={totalPage}
+      />
     </div>
   );
 };

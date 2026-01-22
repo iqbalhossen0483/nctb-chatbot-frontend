@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/components/libs/Button";
 import OutlinedInput from "@/components/libs/OutlinedInput";
 import { useState } from "react";

@@ -1,5 +1,3 @@
-"use client";
-
 import SignupForm from "@/components/auth/SignupForm";
 import Card from "@/components/libs/Card";
 import Typography from "@/components/libs/Typography";

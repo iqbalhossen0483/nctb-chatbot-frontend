@@ -1,3 +1,4 @@
+import NextAuthProvider from "@/providers/NextAuthProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
@@ -26,7 +27,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable}`}>
         <ReduxProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <NextAuthProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </NextAuthProvider>
         </ReduxProvider>
       </body>
     </html>

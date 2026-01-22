@@ -1,4 +1,3 @@
-"use client";
 import SignInForm from "@/components/auth/SignInForm";
 import Button from "@/components/libs/Button";
 import Card from "@/components/libs/Card";

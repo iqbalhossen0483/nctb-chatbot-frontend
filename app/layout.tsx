@@ -1,10 +1,5 @@
-import AuthGuard from "@/providers/AuthGaurd";
-import NextAuthProvider from "@/providers/NextAuthProvider";
-import ReduxProvider from "@/providers/ReduxProvider";
-import ThemeProvider from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,11 +8,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Suhaas",
-  description: "Project Management",
-  icons: {
-    icon: "/favicon.png",
-  },
+  title: "Chat Bot",
+  description: "This is a chat bot application.",
 };
 
 export default function RootLayout({
@@ -27,16 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable}`}>
-        <ReduxProvider>
-          <NextAuthProvider>
-            <ThemeProvider>
-              <AuthGuard>{children}</AuthGuard>
-              <ToastContainer />
-            </ThemeProvider>
-          </NextAuthProvider>
-        </ReduxProvider>
-      </body>
+      <body className={`${geistSans.variable} antialiased`}>{children}</body>
     </html>
   );
 }

@@ -1,96 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: var(--color-gray-200);
-  --card: var(--color-white);
-  --border: rgba(145, 158, 171, 0.24);
-
-  --primary-main: #1a8ea0;
-  --primary-dark: #0e6572;
-  --primary-darker: #09454e;
-
-  --error: var(--color-red-500);
-  --warning: var(--color-yellow-500);
-  --success: var(--color-green-500);
-  --info: var(--color-blue-500);
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-@theme {
+@theme inline {
   --color-background: var(--background);
-  --color-card: var(--card);
-  --color-border: var(--border);
+  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-
-  --color-primary-main: var(--primary-main);
-  --color-primary-dark: var(--primary-dark);
-  --color-primary-darker: var(--primary-darker);
-
-  --color-error: var(--error);
-  --color-warning: var(--warning);
-  --color-success: var(--success);
-  --color-info: var(--info);
-}
-
-@layer theme {
-  .dark {
-    --color-background: #0b1220;
-    --color-card: #1a2436;
-
-    --color-border: var(--border);
-    --font-sans: var(--font-geist-sans);
-
-    --color-primary-main: var(--primary-main);
-    --color-primary-dark: var(--primary-dark);
-    --color-primary-darker: var(--primary-darker);
-
-    --color-error: var(--error);
-    --color-warning: var(--warning);
-    --color-success: var(--success);
-    --color-info: var(--info);
-  }
-}
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-button {
-  @apply cursor-pointer disabled:cursor-not-allowed;
-}
-
-hr {
-  @apply border-border;
-}
-
-input,
-textarea,
-.input {
-  @apply w-full text-sm md:text-base px-4 py-2 rounded-md border outline-none border-gray-300
-     dark:text-white dark:border-border;
-}
-
-/* Hide number input arrows (cross-browser) */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  @apply appearance-none m-0;
-}
-input[type="number"] {
-  appearance: textfield; /* Standard syntax */
-  -moz-appearance: textfield; /* Firefox */
-  -webkit-appearance: none; /* Safari & Chrome */
-}
-
-label,
-.label {
-  @apply dark:text-white font-medium;
-}
-
-th,
-td {
-  @apply lg:px-4 px-2 py-3 text-center dark:text-white text-nowrap;
-}
-th {
-  @apply font-medium;
-}
-
-tbody tr {
-  @apply hover:bg-gray-200 dark:hover:bg-primary-darker/30 even:bg-gray-200/50 dark:even:bg-primary-darker/60;
+  --font-mono: var(--font-geist-mono);
 }
